@@ -1,6 +1,6 @@
 # Almanac - Smart To- Do List Site
 
-![Todo List Screenshot](../images/image.png) 
+![Todo List Screenshot](image.png) 
 
 ## Features
 
