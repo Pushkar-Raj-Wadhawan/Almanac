@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Almanac - To Do Site</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="utilities.css">
+</head>
+
+<body>
+    <div class="header rounded bgc2"><b>ALMANAC</b></div>
+
+    <div class="content rounded bgc2">
+
+        <div class="setDate">
+
+            <div class="prevDate"><img src="left.svg" alt="prev"></div>
+            <div class="currentDate">Aug 24</div>
+            <div class="nextDate"><img src="right.svg" alt="next"></div>
+            <input type="date" class="calendar" style="display: none;">
+
+        </div>
+
+    <div class="toDoList bgc3 rounded3">
+
+            <!-- The main to do list of selected date -->
+
+            <div class="heading">Wednesday</div>
+
+            <div class="list">
+
+                <div class="byCategory">
+
+                </div>
+
+                <div class="general">  <!--represent non categorized events-->
+
+                    <!-- Non Categorized Tasks -->
+
+                      <form class="custom-checkboxes" id="general"></form> 
+                </div>
+                
+                <div class="add">
+                    <div class="addEvent">Add Event</div>
+                    <div class="addEvent addCategory">Add Category</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <script src="script.js"></script>
+        
+       
+
+</body>
+</html>
