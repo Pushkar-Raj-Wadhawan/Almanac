@@ -1,4 +1,4 @@
-# Almanac - Smart To- Do List Site
+# Almanac - Smart To - Do List Site
 
 ![Todo List Screenshot](image.png) 
 
