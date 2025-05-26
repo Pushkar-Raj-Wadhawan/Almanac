@@ -1,10 +1,12 @@
+// storageManager is an object of functions
+
 const storageManager = {
 
     saveTodos: (todosData) => {
         localStorage.setItem('todosData', JSON.stringify(todosData))
     },
     loadTodos: () => {
-        const saved = localStorage.getItem('todosData')
+        const saved = localStorage.getItem('todosData')     
         return saved ? JSON.parse(saved) : {}
     }
 
@@ -21,6 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelector(".addEvent").addEventListener("click", addGeneralTodo)
     document.querySelector(".addCategory").addEventListener("click", addNewCategory)
+        
+    // going to prev date
 
     document.querySelector(".prevDate").addEventListener("click", function () {
 
@@ -29,6 +33,8 @@ document.addEventListener('DOMContentLoaded', function () {
         updateDateAndTodos()
 
     })
+
+    // going to next date
 
     document.querySelector(".nextDate").addEventListener("click", function () {
 
@@ -58,6 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
         changeTodosForCurrentDate()
         
     }
+
+    // displays the date and day, corresponding to the date selected by the user
 
     function updateDateDisplay() {
 
@@ -137,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Adding a to-do
 
-    function createTodoItem(text = "") {
+    function createTodoItem(text = "", isChecked = false) {
 
         const item = document.createElement("div")
         item.className = "item"
@@ -145,6 +153,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const label = document.createElement("label")
         const checkbox = document.createElement("input")
         checkbox.type = "checkbox"
+        checkbox.checked = isChecked
+        checkbox.addEventListener('change', saveCurrentTodos)
 
         const customCheck = document.createElement("span")
         customCheck.className = "custom-check"
@@ -185,9 +195,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // To save general to-do
         const generalTodos = []
-        document.querySelectorAll("#general .item input[type='text']").forEach(input => {
+        document.querySelectorAll("#general .item").forEach(item => {
+            const input = item.querySelector("input[type='text']")
+            const checkbox = item.querySelector("input[type='checkbox']")
             if (input.value.trim() !== '') {
-                generalTodos.push(input.value.trim())
+                generalTodos.push({
+                    text: input.value.trim(),
+                    checked: checkbox.checked
+                })
             }
         })
 
@@ -198,9 +213,14 @@ document.addEventListener('DOMContentLoaded', function () {
             if (categoryName === '') return
 
             const items = []
-            categoryEl.querySelectorAll(".item input[type='text']").forEach(input => {
+            categoryEl.querySelectorAll(".item").forEach(item => {
+                const input = item.querySelector("input[type='text']")
+                const checkbox = item.querySelector("input[type='checkbox']")
                 if (input.value.trim() !== '') {
-                    items.push(input.value.trim())
+                    items.push({
+                        text: input.value.trim(),
+                        checked: checkbox.checked
+                    })
                 }
             })
 
@@ -221,12 +241,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const dateKey = getDateKey(currentDate)
         const todosForDate = todosData[dateKey] || { general: [], categories: {} }
 
+        //setting the current html content as void
         document.getElementById("general").innerHTML = ''
         document.querySelector(".byCategory").innerHTML = ''
 
         // change general todos
-        todosForDate.general.forEach(text => {
-            const item = createTodoItem(text)
+        todosForDate.general.forEach(todo => {
+            const item = createTodoItem(todo.text, todo.checked)
             document.getElementById("general").appendChild(item)
         })
 
@@ -235,8 +256,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const category = createCategoryElement(categoryName)
             const form = category.querySelector(".custom-checkboxes")
 
-            items.forEach(text => {
-                const item = createTodoItem(text)
+            items.forEach(todo => {
+                const item = createTodoItem(todo.text, todo.checked)
                 form.appendChild(item)
             })
 
